@@ -28,9 +28,9 @@ def unsafeClinicianAlert(clinician_id, query_id, location_data):
             print(f'would send alert email for {clinician_id}')
             updateAlertStatus(clinician_id)
 
-            #response = sendMessage(message)
-            #if response is '202':
-            #    updateAlertedStatus(query_id)
+            response = sendMessage(message)
+            if response == '202':
+               updateAlertStatus(clinician_id)
 
 
         except Exception as e:
@@ -38,7 +38,23 @@ def unsafeClinicianAlert(clinician_id, query_id, location_data):
     else:
         print('alerted already')
 
+def serverDownAlert(error_message):
+    try:
+        message = Mail(
+            from_email=SENDER_EMAIL,
+            to_emails=ALERTS_INBOX,
+            subject=f"{error_message}!",
+            plain_text_content=f'{error_message}',
+        # html_content=f'<strong> Query ID: {query_id}</strong>'
+        )
 
+        response = sendMessage(message)
+        if response == '202':
+            return True
+        return False
+
+    except Exception as e:
+        print(e)
 
 
 def sendMessage(message):
