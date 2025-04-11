@@ -44,9 +44,10 @@ def computeClinicianInServiceAreas(location, polygons):
     for polygon in polygons:
         intersections.append(raycast(location, polygon))
     #decide on return 
+    print(intersections)
     #if there is true in set, return true 
 
 
-with open('testdata/invalid.json') as f:
+with open('testdata/dataset1/test_out7.json') as f:
     res = json.load(f)   
     generateSafetyStatus(res)
