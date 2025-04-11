@@ -1,7 +1,7 @@
 import json
 from mathtools.raycast import raycast
 
-#main driver to generate safety status of clinician
+#main driver-entry to generate safety status of clinician
 def generateSafetyStatus(res):
     location, polygons = parseClinicianStatus(res)
     polygons = prunePolygonSet(polygons)
@@ -47,6 +47,6 @@ def computeClinicianInServiceAreas(location, polygons):
     return True in intersections
 
 
-with open('testdata/invalid.json') as f:
-    res = json.load(f)   
-    print(generateSafetyStatus(res))
+# with open('testdata/invalid.json') as f:
+#     res = json.load(f)   
+#     print(generateSafetyStatus(res))
