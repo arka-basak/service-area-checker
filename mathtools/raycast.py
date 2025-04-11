@@ -1,4 +1,3 @@
-import numpy
 TOLERANCE = 1e-15
 
 

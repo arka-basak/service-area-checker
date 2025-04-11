@@ -6,7 +6,7 @@ def generateSafetyStatus(res):
     location, polygons = parseClinicianStatus(res)
     polygons = prunePolygonSet(polygons)
     if location and polygons:
-        computeClinicianInServiceAreas(location, polygons)
+        return computeClinicianInServiceAreas(location, polygons)
 
 
 
@@ -44,10 +44,9 @@ def computeClinicianInServiceAreas(location, polygons):
     for polygon in polygons:
         intersections.append(raycast(location, polygon))
     #decide on return 
-    print(intersections)
-    #if there is true in set, return true 
+    return True in intersections
 
 
-with open('testdata/dataset1/test_out7.json') as f:
+with open('testdata/invalid.json') as f:
     res = json.load(f)   
-    generateSafetyStatus(res)
+    print(generateSafetyStatus(res))
