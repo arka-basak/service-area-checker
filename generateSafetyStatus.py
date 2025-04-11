@@ -1,9 +1,13 @@
 import json
+from mathtools.raycast import raycast
 
 #main driver to generate safety status of clinician
 def generateSafetyStatus(res):
     location, polygons = parseClinicianStatus(res)
     polygons = prunePolygonSet(polygons)
+    if location and polygons:
+        computeClinicianInServiceAreas(location, polygons)
+
 
 
 #Processes api-response to serve clinician status geometry 
@@ -22,18 +26,25 @@ def parseClinicianStatus(res):
     return locationCoordinates , polygons
 
 
+
 #Filters polygon-set to only contain valid polygons
 def prunePolygonSet(polygons):
     prunedPolygons = [p for p in polygons if p[0] == p[-1]]
 
-    # prunedPolygons = []
-    # for polygon in polygons: 
-    #     if polygon[0] == polygon[-1]:
-    #         prunedPolygons.append(polygon)
-
     #todo: check for self-intersections (maybe)
-    print(json.dumps(prunedPolygons, indent = 2))
+
+    #print(json.dumps(prunedPolygons, indent = 2))
     return prunedPolygons
+
+
+
+#computation driver 
+def computeClinicianInServiceAreas(location, polygons):
+    intersections = [] 
+    for polygon in polygons:
+        intersections.append(raycast(location, polygon))
+    #decide on return 
+    #if there is true in set, return true 
 
 
 with open('testdata/invalid.json') as f:
