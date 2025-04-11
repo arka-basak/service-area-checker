@@ -1,4 +1,5 @@
 import json
+from clinicianStatus import updateSafetyStatus
 from mathtools.raycast import raycast
 
 #main driver-entry to generate safety status of clinician
@@ -6,7 +7,9 @@ def generateSafetyStatus(res):
     location, polygons = parseClinicianStatus(res)
     polygons = prunePolygonSet(polygons)
     if location and polygons:
-        return computeClinicianInServiceAreas(location, polygons)
+        safetyStatus =  computeClinicianInServiceAreas(location, polygons)
+        #updateSafetyStatus(safetyStatus)
+        return safetyStatus
 
 
 
