@@ -72,6 +72,7 @@ def processServerError(error):
     """
     if not server['alerted']:
         server['alerted'] =  serverDownAlert(error)
+        server['status'] = False
     else:
         print('server error already alerted')
     return server
